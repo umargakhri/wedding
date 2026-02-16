@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;1,700&family=Noto+Nastaliq+Urdu&display=swap" rel="stylesheet">
     <style>
         :root {
-            --deep-teal: #003d33;
+            --deep-emerald: #00332c;
             --gold: #D4AF37;
             --cream: #fffdf5;
             --white: #ffffff;
@@ -15,20 +15,18 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
-            background: var(--deep-teal); 
+            background: var(--deep-emerald); 
             color: var(--cream); 
             font-family: 'Montserrat', sans-serif; 
             overflow-x: hidden;
             scroll-behavior: smooth;
         }
 
-        /* FALLING FLOWERS CANVAS */
         #flower-canvas {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 1; pointer-events: none;
         }
 
-        /* FULL PAGE SECTIONS (WALLPAPER STYLE) */
         section {
             position: relative;
             min-height: 100vh;
@@ -36,162 +34,160 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 40px 20px;
+            padding: 60px 20px;
             z-index: 2;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
         }
 
-        /* HEADER SECTION */
+        /* WALLPAPER HEADER */
         .hero {
-            background: linear-gradient(rgba(0, 61, 51, 0.7), rgba(0, 61, 51, 0.7)), 
-                        url('https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=2000');
+            background: linear-gradient(rgba(0, 51, 44, 0.8), rgba(0, 51, 44, 0.8)), 
+                        url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=2000');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
+            text-align: center;
         }
 
         .bismillah {
             font-family: 'Noto Nastaliq Urdu', serif;
-            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            font-size: clamp(2rem, 6vw, 3rem);
             color: var(--gold);
-            margin-bottom: 30px;
-            text-shadow: 0 0 10px rgba(0,0,0,0.5);
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
         }
 
-        /* ORNAMENTAL POETRY BOX */
+        /* POETRY BOX */
         .poetry-box {
-            background: rgba(255, 255, 255, 0.07);
-            backdrop-filter: blur(10px);
-            border: 2px solid var(--gold);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--gold);
             padding: 40px;
-            max-width: 700px;
-            border-radius: 50px 0 50px 0;
+            max-width: 800px;
+            width: 90%;
             margin: 40px auto;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border-radius: 0px 40px 0px 40px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
 
         .quran-arabic {
             font-family: 'Noto Nastaliq Urdu', serif;
-            font-size: 1.4rem;
-            line-height: 2.8;
+            font-size: clamp(1.2rem, 4vw, 1.8rem);
+            line-height: 2.5;
             color: var(--gold);
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .quran-urdu {
             font-family: 'Noto Nastaliq Urdu', serif;
-            font-size: 1.2rem;
-            line-height: 2.2;
+            font-size: clamp(1rem, 3.5vw, 1.3rem);
+            line-height: 2;
             color: var(--white);
         }
 
-        /* CONTENT STYLING */
-        h1 { font-family: 'Pinyon Script', cursive; font-size: clamp(4rem, 15vw, 8rem); color: var(--gold); }
-        .host-title { font-size: 0.9rem; letter-spacing: 5px; text-transform: uppercase; color: var(--gold); }
+        h1 { font-family: 'Pinyon Script', cursive; font-size: clamp(4rem, 15vw, 8.5rem); color: var(--gold); }
 
-        /* SCRATCH AREA */
-        .scratch-wrap {
-            position: relative; width: 300px; height: 150px; background: var(--white);
-            display: flex; justify-content: center; align-items: center; border-radius: 15px; overflow: hidden;
+        /* SCRATCH & COUNTDOWN AREA */
+        .scratch-container {
+            position: relative; width: 320px; height: 180px; margin: 20px auto;
+            background: rgba(255,255,255,0.1); border-radius: 15px; overflow: hidden;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
         }
-        #reveal-date { color: var(--deep-teal); font-weight: 700; font-size: 1.4rem; text-align: center; }
-        #scratch-canvas { position: absolute; top: 0; left: 0; cursor: crosshair; touch-action: none; }
+        #reveal-content { opacity: 0; transition: opacity 0.5s; text-align: center; }
+        .countdown { display: flex; gap: 10px; margin-top: 15px; justify-content: center; }
+        .count-box { border: 1px solid var(--gold); padding: 5px 10px; font-size: 0.8rem; }
+        .count-box span { display: block; font-size: 1.2rem; color: var(--gold); font-weight: bold; }
+        
+        #scratch-canvas { position: absolute; top: 0; left: 0; z-index: 5; cursor: crosshair; touch-action: none; }
 
-        /* DRESS CODE WALLPAPER */
-        .dress-code-section {
-            background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), 
-                        url('https://www.transparenttextures.com/patterns/natural-paper.png');
-            color: var(--deep-teal);
+        /* DRESS CODE */
+        .dress-section {
+            background: var(--white); color: var(--deep-emerald);
+            width: 100%; text-align: center; padding: 80px 20px;
         }
 
-        /* BUTTONS */
         .btn {
-            background: var(--gold);
-            color: var(--deep-teal);
-            padding: 20px 40px;
-            border: none;
-            border-radius: 50px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            cursor: pointer;
-            transition: 0.4s;
-            margin-top: 20px;
-            text-decoration: none;
+            background: var(--gold); color: var(--deep-emerald);
+            padding: 18px 40px; border: none; border-radius: 50px;
+            font-weight: 700; text-transform: uppercase; letter-spacing: 2px;
+            cursor: pointer; margin-top: 30px; text-decoration: none; display: inline-block;
         }
-        .btn:hover { background: var(--deep-teal); color: var(--gold); transform: scale(1.05); }
 
-        /* RSVP FORM */
         input, select { 
-            width: 100%; padding: 15px; margin: 10px 0; background: rgba(255,255,255,0.1); 
-            border: 1px solid var(--gold); color: white; border-radius: 10px;
+            width: 100%; padding: 15px; margin: 10px 0; background: rgba(255,255,255,0.05); 
+            border: 1px solid var(--gold); color: white; border-radius: 5px;
         }
 
-        #music-toggle {
-            position: fixed; bottom: 20px; right: 20px; background: var(--gold);
-            width: 50px; height: 50px; border-radius: 50%; display: flex;
+        #music-btn {
+            position: fixed; bottom: 25px; right: 25px; background: var(--gold);
+            width: 55px; height: 55px; border-radius: 50%; display: flex;
             justify-content: center; align-items: center; cursor: pointer; z-index: 100;
-        }
-
-        /* MOBILE FIX */
-        @media (max-width: 600px) {
-            .poetry-box { padding: 25px; border-radius: 30px 0 30px 0; }
+            box-shadow: 0 0 15px rgba(0,0,0,0.3);
         }
     </style>
 </head>
 <body>
 
     <canvas id="flower-canvas"></canvas>
-    
     <audio id="bgMusic" loop>
         <source src="https://www.bensound.com/bensound-music/bensound-india.mp3" type="audio/mpeg">
     </audio>
-    <div id="music-toggle" onclick="toggleMusic()">🎵</div>
+    <div id="music-btn" onclick="toggleMusic()">🎵</div>
 
     <section class="hero">
         <div class="bismillah">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
-        <p class="host-title">Master Muhammad Sharif & Family</p>
-        <p style="margin: 20px 0; font-style: italic;">Invite you to complete the Sunnah in the union of</p>
+        <p style="letter-spacing: 5px; font-size: 0.8rem; color: var(--gold);">MASTER MUHAMMAD SHARIF & FAMILY</p>
+        <p style="margin: 15px 0;">Request your presence to complete the Sunnah in the union of</p>
         <h1>Saba & Hamza</h1>
-        <a href="#details" class="btn">Scroll to Reveal</a>
+        <p style="margin-top: 20px; font-style: italic;">Scroll down to reveal the date</p>
     </section>
 
-    <section id="details">
+    <section>
         <div class="poetry-box">
-            <div class="quran-arabic">وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْکُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً</div>
+            <div class="quran-arabic">وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَکُم مِّنْ أَنفُسِکُمْ أَزْوَاجًا لِّتَسْکُنُوا إِلَيْهَا وَجَعَلَ بَيْنَکُم مَّوَدَّةً وَرَحْمَةً</div>
             <div class="quran-urdu">اور اُس کی نشانیوں میں سے ہے کہ اُس نے تمہارے لیے تم ہی میں سے جوڑے پیدا کیے تاکہ تم اُن سے سکون حاصل کرو، اور اُس نے تمہارے درمیان محبت اور رحمت رکھ دی۔</div>
-            <p style="margin-top: 15px; color: var(--gold); font-size: 0.8rem;">سورۃ الروم — آیت 21</p>
+            <p style="margin-top: 20px; color: var(--gold); font-size: 0.9rem;">— سورۃ الروم (21)</p>
         </div>
     </section>
 
     <section>
-        <h2 style="font-family: 'Playfair Display'; color: var(--gold); margin-bottom: 20px;">Save The Date</h2>
-        <p style="margin-bottom: 20px; opacity: 0.8;">(Scratch the card to reveal the date)</p>
-        <div class="scratch-wrap">
-            <div id="reveal-date">March 17, 2026<br><span style="font-size: 0.9rem; font-weight: 400;">4:30 PM Inshallah</span></div>
-            <canvas id="scratch-canvas" width="300" height="150"></canvas>
+        <h2 style="font-family: 'Playfair Display'; color: var(--gold); margin-bottom: 25px;">The Invitation</h2>
+        <p style="margin-bottom: 20px; opacity: 0.8;">Scratch the golden layer below to reveal the moment</p>
+        
+        <div class="scratch-container">
+            <div id="reveal-content">
+                <p style="font-weight: bold; color: var(--gold);">MARCH 17, 2026</p>
+                <p style="font-size: 0.8rem;">Gakhri, Punjab | 4:30 PM</p>
+                <div class="countdown">
+                    <div class="count-box"><span id="days">00</span>Days</div>
+                    <div class="count-box"><span id="hours">00</span>Hrs</div>
+                    <div class="count-box"><span id="mins">00</span>Min</div>
+                </div>
+            </div>
+            <canvas id="scratch-canvas" width="320" height="180"></canvas>
         </div>
+
         <div style="margin-top: 40px; text-align: center;">
-            <p><strong>Location:</strong> Gakhri, Punjab, Pakistan</p>
-            <p><strong>Contact:</strong> 03068505970</p>
-            <a href="tel:03068505970" class="btn">Call for Directions</a>
+            <p><strong>Contact for Guidance:</strong></p>
+            <p style="font-size: 1.5rem; color: var(--gold); margin: 10px 0;">03068505970</p>
+            <a href="https://maps.google.com" target="_blank" class="btn">Open Location Map</a>
         </div>
     </section>
 
-    <section class="dress-code-section">
-        <h2 style="font-family: 'Playfair Display'; font-size: 2.5rem; margin-bottom: 20px;">The Style Guide</h2>
-        <div style="width: 60px; height: 60px; background: white; border: 2px solid var(--gold); border-radius: 50%; margin-bottom: 20px;"></div>
-        <p style="max-width: 500px; line-height: 1.8; font-weight: 600;">
-            To honor the Sunnah and the purity of this occasion, we kindly request our guests to wear 
-            <span style="color: var(--gold); font-size: 1.2rem;">White Traditional Attire</span>.
+    <section class="dress-section">
+        <h2 style="font-family: 'Playfair Display'; font-size: 2.5rem; letter-spacing: 2px;">The Style Guide</h2>
+        <div style="width: 70px; height: 70px; background: white; border: 3px solid var(--gold); border-radius: 50%; margin: 25px auto;"></div>
+        <p style="max-width: 600px; line-height: 2; margin: 0 auto; font-weight: 600;">
+            We request the honor of your presence in <br>
+            <span style="font-size: 1.5rem; color: var(--gold);">White Traditional Attire</span><br>
+            to celebrate the purity of this blessed Nikkah.
         </p>
     </section>
 
     <section>
-        <h2 style="font-family: 'Playfair Display'; color: var(--gold); margin-bottom: 30px;">RSVP</h2>
-        <div class="card" style="width: 100%; max-width: 500px;">
+        <h2 style="font-family: 'Playfair Display'; color: var(--gold); margin-bottom: 30px;">RSVP & Gallery</h2>
+        <div style="width: 100%; max-width: 450px;">
             <form onsubmit="confirmRSVP(event)">
-                <input type="text" placeholder="Your Name" required>
+                <input type="text" placeholder="Full Name" required>
                 <select required>
                     <option value="">Number of Guests</option>
                     <option value="1">1 Person</option>
@@ -199,25 +195,25 @@
                     <option value="3">3 People</option>
                     <option value="Family">Family</option>
                 </select>
-                <button type="submit" class="btn" style="width: 100%;">Confirm Attendance</button>
+                <button type="submit" class="btn" style="width: 100%;">Confirm RSVP</button>
             </form>
-            <div id="rsvp-msg" style="display:none; margin-top: 20px; color: var(--gold);">Shukriya! We look forward to seeing you.</div>
+            <div id="rsvp-msg" style="display:none; margin-top: 20px; color: var(--gold); font-size: 1.2rem;">Shukriya! Your response is saved.</div>
         </div>
 
-        <div style="margin-top: 60px; text-align: center;">
-            <h2 style="font-family: 'Playfair Display'; color: var(--gold); margin-bottom: 20px;">Event Gallery</h2>
-            <div style="border: 2px dashed var(--gold); padding: 40px; cursor: pointer;" onclick="window.open('YOUR_GOOGLE_LINK', '_blank')">
-                <p>📸 Click here to Upload/View Photos</p>
+        <div style="margin-top: 60px; text-align: center; width: 100%; max-width: 450px;">
+            <div style="border: 1px dashed var(--gold); padding: 40px; cursor: pointer;" onclick="window.open('YOUR_GOOGLE_FOLDER_LINK', '_blank')">
+                <p>📸 VIEW & UPLOAD PHOTOS</p>
+                <small style="opacity: 0.6;">(Digital Guestbook)</small>
             </div>
         </div>
     </section>
 
-    <footer style="padding: 40px; opacity: 0.5; font-size: 0.8rem;">
-        Saba & Hamza | Gakhri, Punjab | 2026
+    <footer style="padding: 40px; opacity: 0.4; font-size: 0.7rem; letter-spacing: 3px;">
+        SABA & HAMZA | GAKHRI | MARCH 2026
     </footer>
 
     <script>
-        // MUSIC LOGIC
+        // BACKGROUND MUSIC
         let playing = false;
         const music = document.getElementById('bgMusic');
         function toggleMusic() {
@@ -225,27 +221,37 @@
             else { music.pause(); playing = false; }
         }
 
-        // SCRATCH CARD LOGIC
+        // SCRATCH TO REVEAL DATE & COUNTDOWN
         const canvas = document.getElementById('scratch-canvas');
         const ctx = canvas.getContext('2d');
-        ctx.fillStyle = '#C0C0C0';
-        ctx.fillRect(0, 0, 300, 150);
-        ctx.fillStyle = '#888';
-        ctx.font = '18px Montserrat';
+        const revealContent = document.getElementById('reveal-content');
+
+        // Draw Gold Scratch Layer
+        ctx.fillStyle = '#D4AF37';
+        ctx.fillRect(0, 0, 320, 180);
+        ctx.fillStyle = '#555';
+        ctx.font = 'bold 16px Montserrat';
         ctx.textAlign = 'center';
-        ctx.fillText('Scratch to Reveal', 150, 85);
+        ctx.fillText('SCRATCH TO REVEAL', 160, 95);
 
         let isDrawing = false;
+        let scratchedAmount = 0;
+
         function scratch(e) {
             if (!isDrawing) return;
             const rect = canvas.getBoundingClientRect();
             const x = (e.clientX || e.touches[0].clientX) - rect.left;
             const y = (e.clientY || e.touches[0].clientY) - rect.top;
+            
             ctx.globalCompositeOperation = 'destination-out';
             ctx.beginPath();
-            ctx.arc(x, y, 25, 0, Math.PI * 2);
+            ctx.arc(x, y, 30, 0, Math.PI * 2);
             ctx.fill();
+
+            // Fade in the countdown as they scratch
+            revealContent.style.opacity = "1";
         }
+
         canvas.addEventListener('mousedown', () => isDrawing = true);
         canvas.addEventListener('mouseup', () => isDrawing = false);
         canvas.addEventListener('mousemove', scratch);
@@ -253,40 +259,49 @@
         canvas.addEventListener('touchend', () => isDrawing = false);
         canvas.addEventListener('touchmove', scratch);
 
-        // FALLING FLOWERS LOGIC
+        // COUNTDOWN TIMER
+        const targetDate = new Date("March 17, 2026 16:30:00").getTime();
+        setInterval(() => {
+            const now = new Date().getTime();
+            const diff = targetDate - now;
+            if (diff > 0) {
+                document.getElementById('days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+                document.getElementById('hours').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                document.getElementById('mins').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            }
+        }, 1000);
+
+        // PETAL RAIN
         const fCanvas = document.getElementById('flower-canvas');
         const fCtx = fCanvas.getContext('2d');
         fCanvas.width = window.innerWidth;
         fCanvas.height = window.innerHeight;
-
         const petals = [];
         class Petal {
             constructor() {
                 this.x = Math.random() * fCanvas.width;
                 this.y = Math.random() * fCanvas.height - fCanvas.height;
-                this.size = Math.random() * 5 + 2;
-                this.speed = Math.random() * 1.5 + 0.5;
-                this.color = Math.random() > 0.5 ? '#fff' : '#ffb7b7';
+                this.s = Math.random() * 4 + 2;
+                this.v = Math.random() * 1.5 + 0.5;
             }
             draw() {
-                fCtx.fillStyle = this.color;
+                fCtx.fillStyle = Math.random() > 0.5 ? "#fff" : "#ffd1d1";
                 fCtx.beginPath();
-                fCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                fCtx.arc(this.x, this.y, this.s, 0, Math.PI * 2);
                 fCtx.fill();
             }
             update() {
-                this.y += this.speed;
-                this.x += Math.sin(this.y / 50);
+                this.y += this.v;
                 if (this.y > fCanvas.height) this.y = -10;
             }
         }
-        for(let i=0; i<50; i++) petals.push(new Petal());
-        function animate() {
-            fCtx.clearRect(0, 0, fCanvas.width, fCanvas.height);
+        for(let i=0; i<60; i++) petals.push(new Petal());
+        function anim() {
+            fCtx.clearRect(0,0,fCanvas.width, fCanvas.height);
             petals.forEach(p => { p.update(); p.draw(); });
-            requestAnimationFrame(animate);
+            requestAnimationFrame(anim);
         }
-        animate();
+        anim();
 
         function confirmRSVP(e) {
             e.preventDefault();
