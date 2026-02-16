@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saba & Hamza - Nikkah Invitation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;1,700&family=Noto+Nastaliq+Urdu&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-teal: #003d33;
+            --gold: #D4AF37;
+            --cream: #fffdf5;
+            --white: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background: var(--deep-teal); 
+            color: var(--cream); 
+            font-family: 'Montserrat', sans-serif; 
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* FALLING FLOWERS CANVAS */
+        #flower-canvas {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 1; pointer-events: none;
+        }
+
+        /* FULL PAGE SECTIONS (WALLPAPER STYLE) */
+        section {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            z-index: 2;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        /* HEADER SECTION */
+        .hero {
+            background: linear-gradient(rgba(0, 61, 51, 0.7), rgba(0, 61, 51, 0.7)), 
+                        url('https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=2000');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .bismillah {
+            font-family: 'Noto Nastaliq Urdu', serif;
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            color: var(--gold);
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        /* ORNAMENTAL POETRY BOX */
+        .poetry-box {
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--gold);
+            padding: 40px;
+            max-width: 700px;
+            border-radius: 50px 0 50px 0;
+            margin: 40px auto;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .quran-arabic {
+            font-family: 'Noto Nastaliq Urdu', serif;
+            font-size: 1.4rem;
+            line-height: 2.8;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        .quran-urdu {
+            font-family: 'Noto Nastaliq Urdu', serif;
+            font-size: 1.2rem;
+            line-height: 2.2;
+            color: var(--white);
+        }
+
+        /* CONTENT STYLING */
+        h1 { font-family: 'Pinyon Script', cursive; font-size: clamp(4rem, 15vw, 8rem); color: var(--gold); }
+        .host-title { font-size: 0.9rem; letter-spacing: 5px; text-transform: uppercase; color: var(--gold); }
+
+        /* SCRATCH AREA */
+        .scratch-wrap {
+            position: relative; width: 300px; height: 150px; background: var(--white);
+            display: flex; justify-content: center; align-items: center; border-radius: 15px; overflow: hidden;
+        }
+        #reveal-date { color: var(--deep-teal); font-weight: 700; font-size: 1.4rem; text-align: center; }
+        #scratch-canvas { position: absolute; top: 0; left: 0; cursor: crosshair; touch-action: none; }
+
+        /* DRESS CODE WALLPAPER */
+        .dress-code-section {
+            background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), 
+                        url('https://www.transparenttextures.com/patterns/natural-paper.png');
+            color: var(--deep-teal);
+        }
+
+        /* BUTTONS */
+        .btn {
+            background: var(--gold);
+            color: var(--deep-teal);
+            padding: 20px 40px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: 0.4s;
+            margin-top: 20px;
+            text-decoration: none;
+        }
+        .btn:hover { background: var(--deep-teal); color: var(--gold); transform: scale(1.05); }
+
+        /* RSVP FORM */
+        input, select { 
+            width: 100%; padding: 15px; margin: 10px 0; background: rgba(255,255,255,0.1); 
+            border: 1px solid var(--gold); color: white; border-radius: 10px;
+        }
+
+        #music-toggle {
+            position: fixed; bottom: 20px; right: 20px; background: var(--gold);
+            width: 50px; height: 50px; border-radius: 50%; display: flex;
+            justify-content: center; align-items: center; cursor: pointer; z-index: 100;
+        }
+
+        /* MOBILE FIX */
+        @media (max-width: 600px) {
+            .poetry-box { padding: 25px; border-radius: 30px 0 30px 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="flower-canvas"></canvas>
+    
+    <audio id="bgMusic" loop>
+        <source src="https://www.bensound.com/bensound-music/bensound-india.mp3" type="audio/mpeg">
+    </audio>
+    <div id="music-toggle" onclick="toggleMusic()">🎵</div>
+
+    <section class="hero">
+        <div class="bismillah">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
+        <p class="host-title">Master Muhammad Sharif & Family</p>
+        <p style="margin: 20px 0; font-style: italic;">Invite you to complete the Sunnah in the union of</p>
+        <h1>Saba & Hamza</h1>
+        <a href="#details" class="btn">Scroll to Reveal</a>
+    </section>
+
+    <section id="details">
+        <div class="poetry-box">
+            <div class="quran-arabic">وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْکُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً</div>
+            <div class="quran-urdu">اور اُس کی نشانیوں میں سے ہے کہ اُس نے تمہارے لیے تم ہی میں سے جوڑے پیدا کیے تاکہ تم اُن سے سکون حاصل کرو، اور اُس نے تمہارے درمیان محبت اور رحمت رکھ دی۔</div>
+            <p style="margin-top: 15px; color: var(--gold); font-size: 0.8rem;">سورۃ الروم — آیت 21</p>
+        </div>
+    </section>
+
+    <section>
+        <h2 style="font-family: 'Playfair Display'; color: var(--gold); margin-bottom: 20px;">Save The Date</h2>
+        <p style="margin-bottom: 20px; opacity: 0.8;">(Scratch the card to reveal the date)</p>
+        <div class="scratch-wrap">
+            <div id="reveal-date">March 17, 2026<br><span style="font-size: 0.9rem; font-weight: 400;">4:30 PM Inshallah</span></div>
+            <canvas id="scratch-canvas" width="300" height="150"></canvas>
+        </div>
+        <div style="margin-top: 40px; text-align: center;">
+            <p><strong>Location:</strong> Gakhri, Punjab, Pakistan</p>
+            <p><strong>Contact:</strong> 03068505970</p>
+            <a href="tel:03068505970" class="btn">Call for Directions</a>
+        </div>
+    </section>
+
+    <section class="dress-code-section">
+        <h2 style="font-family: 'Playfair Display'; font-size: 2.5rem; margin-bottom: 20px;">The Style Guide</h2>
+        <div style="width: 60px; height: 60px; background: white; border: 2px solid var(--gold); border-radius: 50%; margin-bottom: 20px;"></div>
+        <p style="max-width: 500px; line-height: 1.8; font-weight: 600;">
+            To honor the Sunnah and the purity of this occasion, we kindly request our guests to wear 
+            <span style="color: var(--gold); font-size: 1.2rem;">White Traditional Attire</span>.
+        </p>
+    </section>
+
+    <section>
+        <h2 style="font-family: 'Playfair Display'; color: var(--gold); margin-bottom: 30px;">RSVP</h2>
+        <div class="card" style="width: 100%; max-width: 500px;">
+            <form onsubmit="confirmRSVP(event)">
+                <input type="text" placeholder="Your Name" required>
+                <select required>
+                    <option value="">Number of Guests</option>
+                    <option value="1">1 Person</option>
+                    <option value="2">2 People</option>
+                    <option value="3">3 People</option>
+                    <option value="Family">Family</option>
+                </select>
+                <button type="submit" class="btn" style="width: 100%;">Confirm Attendance</button>
+            </form>
+            <div id="rsvp-msg" style="display:none; margin-top: 20px; color: var(--gold);">Shukriya! We look forward to seeing you.</div>
+        </div>
+
+        <div style="margin-top: 60px; text-align: center;">
+            <h2 style="font-family: 'Playfair Display'; color: var(--gold); margin-bottom: 20px;">Event Gallery</h2>
+            <div style="border: 2px dashed var(--gold); padding: 40px; cursor: pointer;" onclick="window.open('YOUR_GOOGLE_LINK', '_blank')">
+                <p>📸 Click here to Upload/View Photos</p>
+            </div>
+        </div>
+    </section>
+
+    <footer style="padding: 40px; opacity: 0.5; font-size: 0.8rem;">
+        Saba & Hamza | Gakhri, Punjab | 2026
+    </footer>
+
+    <script>
+        // MUSIC LOGIC
+        let playing = false;
+        const music = document.getElementById('bgMusic');
+        function toggleMusic() {
+            if(!playing) { music.play(); playing = true; }
+            else { music.pause(); playing = false; }
+        }
+
+        // SCRATCH CARD LOGIC
+        const canvas = document.getElementById('scratch-canvas');
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#C0C0C0';
+        ctx.fillRect(0, 0, 300, 150);
+        ctx.fillStyle = '#888';
+        ctx.font = '18px Montserrat';
+        ctx.textAlign = 'center';
+        ctx.fillText('Scratch to Reveal', 150, 85);
+
+        let isDrawing = false;
+        function scratch(e) {
+            if (!isDrawing) return;
+            const rect = canvas.getBoundingClientRect();
+            const x = (e.clientX || e.touches[0].clientX) - rect.left;
+            const y = (e.clientY || e.touches[0].clientY) - rect.top;
+            ctx.globalCompositeOperation = 'destination-out';
+            ctx.beginPath();
+            ctx.arc(x, y, 25, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        canvas.addEventListener('mousedown', () => isDrawing = true);
+        canvas.addEventListener('mouseup', () => isDrawing = false);
+        canvas.addEventListener('mousemove', scratch);
+        canvas.addEventListener('touchstart', () => isDrawing = true);
+        canvas.addEventListener('touchend', () => isDrawing = false);
+        canvas.addEventListener('touchmove', scratch);
+
+        // FALLING FLOWERS LOGIC
+        const fCanvas = document.getElementById('flower-canvas');
+        const fCtx = fCanvas.getContext('2d');
+        fCanvas.width = window.innerWidth;
+        fCanvas.height = window.innerHeight;
+
+        const petals = [];
+        class Petal {
+            constructor() {
+                this.x = Math.random() * fCanvas.width;
+                this.y = Math.random() * fCanvas.height - fCanvas.height;
+                this.size = Math.random() * 5 + 2;
+                this.speed = Math.random() * 1.5 + 0.5;
+                this.color = Math.random() > 0.5 ? '#fff' : '#ffb7b7';
+            }
+            draw() {
+                fCtx.fillStyle = this.color;
+                fCtx.beginPath();
+                fCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                fCtx.fill();
+            }
+            update() {
+                this.y += this.speed;
+                this.x += Math.sin(this.y / 50);
+                if (this.y > fCanvas.height) this.y = -10;
+            }
+        }
+        for(let i=0; i<50; i++) petals.push(new Petal());
+        function animate() {
+            fCtx.clearRect(0, 0, fCanvas.width, fCanvas.height);
+            petals.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        function confirmRSVP(e) {
+            e.preventDefault();
+            document.querySelector('form').style.display = 'none';
+            document.getElementById('rsvp-msg').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
